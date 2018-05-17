@@ -77,7 +77,7 @@
     kitty.sing(); // miao miao
 ```
 
-优点: 子类不仅可以继承父类的私有属性，而且可以继承父类`prototype`上的属性
+优点: 通过原型链不仅可以继承父类的私有属性，而且可以继承父类`prototype`上的属性
 缺点: 通过`Kitty.prototype = new Cat()`继承的时候不能给父类传参;  
       需要重新给`prototype.constructor`赋值;
       继承的实现必须写在子类原型属性定义之前,即`Kitty.prototype.constructor = Kitty` 必须在`Kitty.prototype.eat = function...`之前;
@@ -106,12 +106,34 @@
     child.say(); // my name is son,i am 15 years old
 ```
 
-优点:`原型链`继承把父类私有的和原型上的属性方法都继承了,`call`继承实现了传参(其实call也继承了父类的私有属性)
+优点:通过`原型链`继承把父类私有的和原型上的属性方法都继承了,`call`继承了父类的私有属性并实现了传参
 缺点:需要重新给`prototype.constructor`赋值;
     继承的实现必须写在子类原型属性定义之前,即`Kitty.prototype.constructor = Kitty` 必须在`Kitty.prototype.eat = function...`之前;
 
 - 寄生组合式继承
 ```javascript
+    function Parent(name){
+        this.name = name;
+    }
+    Parent.prototype.say = function(){
+        console.log(`my name is ${this.name}`);
+    }
 
+    function Child(name,age){
+        Parent.call(this,name);
+        this.age =age;
+    }
+    Child.prototype = Object.create(Parent.prototype);
+    Child.prototype.constructor = Child;
+    Child.prototype.say = function(){
+        console.log(`my name is ${this.name},i am ${this.age} years old`);
+    }
+    let parent = new Parent('father');
+    let child = new Child('son',15);
+    parent.say(); // my name is father
+    child.say(); // my name is son,i am 15 years old
 ```
+优点:通过`Object.create`只继承了父类prototype的属性,`call`继承了父类的私有属性并实现了传参
+缺点:需要重新给`prototype.constructor`赋值;
+    继承的实现必须写在子类原型属性定义之前,即`Kitty.prototype.constructor = Kitty` 必须在`Kitty.prototype.eat = function...`之前;
     
