@@ -110,7 +110,7 @@
 缺点:需要重新给`prototype.constructor`赋值;
     继承的实现必须写在子类原型属性定义之前,即`Kitty.prototype.constructor = Kitty` 必须在`Kitty.prototype.eat = function...`之前;
 
-- 寄生组合式继承(某培训机构的叫法)
+- 寄生组合式继承
 ```javascript
 
 ```
