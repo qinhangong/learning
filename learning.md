@@ -136,4 +136,33 @@
 优点:通过`Object.create`只继承了父类prototype的属性,`call`继承了父类的私有属性并实现了传参
 缺点:需要重新给`prototype.constructor`赋值;
     继承的实现必须写在子类原型属性定义之前,即`Kitty.prototype.constructor = Kitty` 必须在`Kitty.prototype.eat = function...`之前;
-    
+
+- es6`class`继承
+```javascript
+    class Parent{
+        constructor(name){
+            this.name = name;
+            this.sex = 'boy';
+        }
+        say(){
+            console.log(`my name is ${this.name}`);
+        }
+    }
+
+    class Child extends Parent{
+        constructor(name,age){
+            super(name);// 子类必须执行super,而且必须放在最前面执行
+            this.age = age;
+        }
+
+        say(){
+            console.log(`my name is ${this.name},i am ${this.age} years old,i am a ${this.sex}`);
+        }
+    }
+
+    let parent = new Parent('parent');
+    let child = new Child('child',15);
+    parent.say();
+    child.say();
+```
+优点:看着清爽,子类继承了父类私有的属性和prototype上的属性,可以传参,不用重写子类的constructor了
