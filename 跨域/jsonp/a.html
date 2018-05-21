@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>a</title>
+</head>
+<body>
+    <script>
+        function jsonp(data){
+            console.log(data);
+        }
+        const scp = document.createElement('script');
+        scp.type = 'text/javascript';
+        scp.src = `http://localhost:9000?callback=jsonp`;
+        document.body.appendChild(scp);
+
+    </script>
+</body>
+</html>
